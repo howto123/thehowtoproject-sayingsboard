@@ -1,8 +1,11 @@
-# Getting Started with Create React App
+# sayings board
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Simple app to check out react. Allows user to post great/funny/random sayings and performing crud operations on them.
 
-## Available Scripts
+This project uses typescript, a helpful reference was: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example
+
+---
+## Available Scripts (template form create-react-app)
 
 In the project directory, you can run:
 
