@@ -20,7 +20,7 @@ type FormProps = {
 
 /**
  * This form allows the user to make crud operations on the table shown via the table component.
- * (the selectedId is not in the form but important for backend requests. It sits on the app
+ * (the selectedId is not in the form but needed for the backend requests. It sits on the app
  * component and being updated via the table component)
  */
 class Form extends react.Component<FormProps, FormState> {
@@ -37,7 +37,10 @@ class Form extends react.Component<FormProps, FormState> {
         };
     }
 
-    state: FormState;
+    componentDidMount() {
+        // initializing the checked button after mount
+        (document.getElementById('create') as HTMLInputElement).checked = true;
+        }
 
     handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -59,24 +62,44 @@ class Form extends react.Component<FormProps, FormState> {
         // call the submit handler of the parent
         this.props.handleFormSubmit(stateWhenSubmit);
     };
+
+    changeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({'dbAction': event.target.value as 'create'|'delete'|'update'});
+    }
     
     render() {
         return (
-            <form name="form" className="table" onSubmit={this.handleFormSubmit}>
-                <select name="action" className="row">
-                    <option value='create' className="col" >Add new saying</option>
-                    <option value='update' className="col">Modify highlighted saying</option>
-                    <option value='delete' className="col">Delete saying</option>
-                </select>
-                <br/>
-                <div className="row">
-                    <input name="saying" type="text" placeholder="Saying (mandatory)" className="col-md-6"/>
-                    <input name="author" type="text" placeholder="Author" className="col-md-2"/>
-                    <input name="topic" type="text" placeholder="Topic" className="col-md-2"/>
+            <form name="form" className="container-fluid my-5" onSubmit={this.handleFormSubmit}>
+                <p className="text-start">Please choose what you want to do:</p>
+                <div className="row align-items-center justify-content-center">
+                    <input type="radio"  name="action" onChange={this.changeChecked} className="btn-check" value="create" id="create" />
+                    <label className="btn btn-outline-success col mx-2"  htmlFor="create">Add a new saying</label>
+                    <input type="radio"  name="action" onChange={this.changeChecked} className="btn-check" value="update" id="update" />
+                    <label className="btn btn-outline-success col mx-2" htmlFor="update">Modify highlighted saying</label>
+                    <input type="radio"  name="action" onChange={this.changeChecked} className="btn-check" value="delete" id="delete" />
+                    <label className="btn btn-outline-success col mx-2" htmlFor="delete">Delete highlighted saying</label>
                 </div>
+                <br /><br />
+                <div>
+                    <p className="text-start">If necessairy, enter the required text:</p>
+                    <div className="row align-items-center justify-content-center">
+                        <label htmlFor="saying" className="col-md-6">Saying: </label>
+                        <label htmlFor="author" className="col-3">Author: </label>
+                        <label htmlFor="topic" className="col-3">Topic: </label>
+                    </div>
+                    <div className="row align-items-center justify-content-center">
+                        <input id="saying" name="saying" type="text" placeholder="Saying (mandatory)"
+                            className="col-md-6 text-center"/>
+                        <input id="author" name="author" type="text" placeholder="Author" className="col-3 text-center"/>
+                        <input id="topic" name="topic" type="text" placeholder="Topic" className="col-3 text-center"/>
+                    </div>
+                </div>
+                <br /><br />
+                <p className="text-start">When you are done, click this button:</p>
                 <div className="row">
                     <input type="submit" value="Add/Modify/Delete" className=""/>
                 </div>
+                <br /><br />
             </form>
     );}
 }

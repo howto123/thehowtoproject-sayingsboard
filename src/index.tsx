@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './components/App';
 
 // Styling
-import './index.css';
+import './index.scss';
 
 /**
  * This is the main entry point for the frontend.
@@ -21,8 +21,8 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root') as Element|DocumentFragment);
 root.render(
 	<React.StrictMode>
-		<h2>Here comes theapp</h2>
-		<div className="container-fluid text-center">
+		<div className="container text-center">
+			<h2 className="m-5">Great sayings of this world</h2>
 			<App />
 		</div>
     </React.StrictMode>

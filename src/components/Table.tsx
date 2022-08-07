@@ -13,25 +13,34 @@ type TableProps = {
  */
 function Table(props: TableProps) {
 
+    function highlightNewRow (id: string) {
+        const list = document.getElementsByClassName("selectable-row");
+        Array.prototype.forEach.call(list, element => element.classList.remove('bg-secondary'));
+        document.getElementById(id)?.classList.add('bg-secondary');
+    }
+
     return (
-        <table className="table table-bordered border-dark" >
-            <thead>
-                <tr>
-                    <th scope="col" className="col-md-6">Saying</th>
-                    <th scope="col" className="col-md-2">Author</th>
-                    <th scope="col" className="col-md-2">Topic</th>
-                </tr>
-            </thead>
-            <tbody>
-                { props.arrayOfRowObjects.map( rowObject =>
-                    <Row
-                        key = {rowObject._id} 
-                        {...rowObject}
-                        updateSelectedId = { (id: string) => props.updateSelectedId(id) }
-                    />
-                ) }             
-            </tbody>
-        </table>
+        <div className="container-fluid my-5" >
+            <div className="border border-1 border-dark mytable">
+                <div>
+                    <div className="row align-items-center justify-content-center myrowintable">
+                        <div className="col-md-6">Saying</div>
+                        <div className="col-3">Author</div>
+                        <div className="col-3">Topic</div>
+                    </div>
+                </div>
+                <div>
+                    { props.arrayOfRowObjects.map( rowObject =>
+                        <Row
+                            key = {rowObject._id} 
+                            {...rowObject}
+                            updateSelectedId = { (id: string) => props.updateSelectedId(id) }
+                            highlightNewRow = { (id: string) => highlightNewRow(id) }
+                        />
+                    ) }             
+                </div>
+            </div>
+        </div>
     );
 }
 
