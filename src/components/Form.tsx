@@ -1,6 +1,7 @@
 import React from 'react';
-import react from 'react';
+import $ from 'jquery';
 
+import { validateInputByDbAction } from '../utils/inputValidation';
 
 export type FormContent = {
     saying: string;
@@ -23,7 +24,7 @@ type FormProps = {
  * (the selectedId is not in the form but needed for the backend requests. It sits on the app
  * component and being updated via the table component)
  */
-class Form extends react.Component<FormProps, FormState> {
+class Form extends React.Component<FormProps, FormState> {
     constructor(props: FormProps) {
         super(props);
         this.state = {
@@ -44,9 +45,9 @@ class Form extends react.Component<FormProps, FormState> {
 
     handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        const input = new FormData(event.target as HTMLFormElement);
 
-        // read values
+        // read values into variable
+        const input = new FormData(event.target as HTMLFormElement);
         const stateWhenSubmit: FormState = {
             dbAction: input.get('action') as 'create'|'delete'|'update',
             content: {
@@ -55,6 +56,14 @@ class Form extends react.Component<FormProps, FormState> {
                 topic: input.get('topic') as string
             }
         }
+
+        const isValid = validateInputByDbAction(stateWhenSubmit.dbAction, stateWhenSubmit.content);
+        if(!(isValid)) {
+            console.log("input not valid", isValid);
+        }
+        console.log("Here we are");
+        console.log("isValid: ", isValid, "formState: ", stateWhenSubmit);
+
         // update form state
         this.setState(stateWhenSubmit);
         //console.log("dev: don't forget to restet the form...A");
@@ -63,8 +72,35 @@ class Form extends react.Component<FormProps, FormState> {
         this.props.handleFormSubmit(stateWhenSubmit);
     };
 
-    changeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({'dbAction': event.target.value as 'create'|'delete'|'update'});
+    onDbActionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // read variable
+        const dbAction = event.target.value as 'create'|'delete'|'update';
+
+        // get input objects
+        const inputCreate = $('#saying') as JQuery<HTMLInputElement>;
+        const inputUpdate = $('#author') as JQuery<HTMLInputElement>;
+        const inputDelete = $('#topic') as JQuery<HTMLInputElement>;
+        
+        // enable or disable input fields. this "state" is not reflected in a react state
+        this.setState({'dbAction': dbAction});
+        switch (dbAction) {
+            case 'create': 
+                inputCreate.prop('disabled', false);
+                inputUpdate.prop('disabled', false);
+                inputDelete.prop('disabled', false);
+                break;
+            case 'update': 
+                inputCreate.prop('disabled', false);
+                inputUpdate.prop('disabled', false);
+                inputDelete.prop('disabled', false);
+                break;
+            case 'delete': 
+                inputCreate.prop('disabled', true);
+                inputUpdate.prop('disabled', true);
+                inputDelete.prop('disabled', true);
+                break;
+            default: { /* error... */ }
+        }
     }
     
     render() {
@@ -72,11 +108,11 @@ class Form extends react.Component<FormProps, FormState> {
             <form name="form" className="container-fluid my-5" onSubmit={this.handleFormSubmit}>
                 <p className="text-start">Please choose what you want to do:</p>
                 <div className="row align-items-center justify-content-center">
-                    <input type="radio"  name="action" onChange={this.changeChecked} className="btn-check" value="create" id="create" />
+                    <input type="radio" name="action" onChange={this.onDbActionChanged} className="btn-check" value="create" id="create" />
                     <label className="btn btn-outline-success col mx-2"  htmlFor="create">Add a new saying</label>
-                    <input type="radio"  name="action" onChange={this.changeChecked} className="btn-check" value="update" id="update" />
+                    <input type="radio"  name="action" onChange={this.onDbActionChanged} className="btn-check" value="update" id="update" />
                     <label className="btn btn-outline-success col mx-2" htmlFor="update">Modify highlighted saying</label>
-                    <input type="radio"  name="action" onChange={this.changeChecked} className="btn-check" value="delete" id="delete" />
+                    <input type="radio"  name="action" onChange={this.onDbActionChanged} className="btn-check" value="delete" id="delete" />
                     <label className="btn btn-outline-success col mx-2" htmlFor="delete">Delete highlighted saying</label>
                 </div>
                 <br /><br />
@@ -88,10 +124,10 @@ class Form extends react.Component<FormProps, FormState> {
                         <label htmlFor="topic" className="col-3">Topic: </label>
                     </div>
                     <div className="row align-items-center justify-content-center">
-                        <input id="saying" name="saying" type="text" placeholder="Saying (mandatory)"
+                        <input id="saying" name="saying" type="text" placeholder="Enter a saying to create or update"
                             className="col-md-6 text-center"/>
-                        <input id="author" name="author" type="text" placeholder="Author" className="col-3 text-center"/>
-                        <input id="topic" name="topic" type="text" placeholder="Topic" className="col-3 text-center"/>
+                        <input id="author" name="author" type="text" placeholder="And an author..." className="col-3 text-center"/>
+                        <input id="topic" name="topic" type="text" placeholder="And a topic..." className="col-3 text-center"/>
                     </div>
                 </div>
                 <br /><br />
