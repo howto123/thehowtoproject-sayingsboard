@@ -19,12 +19,21 @@ export function Row(props: RowProps) {
     return (
         <div
             id={props._id}
-            className="row align-items-center justify-content-center myrowintable selectable-row"
-            onClick={(event: React.MouseEvent) => updateSelectedId(event)}
-        >
-            <div className="col-md-6">{props.saying}</div>
-            <div className="col-3">{props.author}</div>
-            <div className="col-3">{props.topic}</div>
+            className="row align-items-center justify-content-center row-in-table selectable-row border-0"
+            onClick={(event: React.MouseEvent) => updateSelectedId(event)}>
+            <div className="col-sm-12 col-md-6">
+                <div className="d-md-none table-label-small border-0 p-0">Saying: </div>
+                {props.saying}
+            </div>
+            <div className="col-sm-12 col-md-3">
+                <div className="d-md-none table-label-small border-0 p-0">Author: </div>
+                {props.author}
+            </div>
+            <div className="col-sm-12 col-md-3">
+                <div className="d-md-none table-label-small border-0 p-0">Topic: </div>
+                {props.topic}
+            </div>
+            <div className="d-md-none bg-dark p-0">Author: </div>
         </div>
     );
 }

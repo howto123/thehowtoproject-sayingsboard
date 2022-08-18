@@ -21,10 +21,10 @@ function Table(props: TableProps) {
         <div className="container-fluid my-5">
             <div className="border border-1 border-dark mytable">
                 <div>
-                    <div className="row align-items-center justify-content-center myrowintable">
-                        <div className="col-md-6">Saying</div>
-                        <div className="col-3">Author</div>
-                        <div className="col-3">Topic</div>
+                    <div className="row responsive-table-head align-items-center justify-content-center row-in-table">
+                        <div className="d-none d-md-block col-md-6 fw-bold">Saying</div>
+                        <div className="d-none d-md-block col-md-3 fw-bold">Author</div>
+                        <div className="d-none d-md-block col-md-3 fw-bold">Topic</div>
                     </div>
                 </div>
                 <div>

@@ -29,9 +29,9 @@ export function validateInputByDbAction(dbAction, formContent) {
     });
     const contentSchemaUpdate = Yup.object({
         // this could be improved so that at least one string needs to be non-empty
-        saying: Yup.string().min(10).max(100),
-        author: Yup.string().min(5).max(25),
-        topic: Yup.string().min(3).max(25)
+        saying: Yup.string().min(sayingMin).max(sayingMax),
+        author: Yup.string().min(authorMin).max(autghorMax),
+        topic: Yup.string().min(topicMin).max(topicMax)
     });
     const contentSchemaDelete = Yup.object({
         saying: Yup.string().max(0),
@@ -76,7 +76,7 @@ export function validateInputByDbAction(dbAction, formContent) {
             }
         }
     } catch (err) {
-        console.dir('we have a problem with formContent: ', err.message);
+        console.log('we have a problem with formContent: ', err.message);
     }
 
     // if the function has not returned yet, the formContent has not matched the corresponding schema

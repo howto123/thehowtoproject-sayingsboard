@@ -109,7 +109,7 @@ class Form extends React.Component<FormProps, FormState> {
         return (
             <form name="form" className="container-fluid my-5" onSubmit={this.handleFormSubmit}>
                 <p className="text-start">Please choose what you want to do:</p>
-                <div className="row align-items-center justify-content-center">
+                <div className="d-flex flex-row align-middle">
                     <input
                         type="radio"
                         name="action"
@@ -118,8 +118,11 @@ class Form extends React.Component<FormProps, FormState> {
                         value="create"
                         id="create"
                     />
-                    <label className="btn btn-outline-success col mx-2" htmlFor="create">
-                        Add a new saying
+                    <label
+                        className="d-flex justify-content-center btn btn-outline-success col mx-2"
+                        htmlFor="create"
+                    >
+                        <span className="align-self-center">Add a new saying</span>
                     </label>
                     <input
                         type="radio"
