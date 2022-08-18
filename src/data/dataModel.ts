@@ -3,4 +3,4 @@ export type SayingModel = {
     saying: string;
     author: string;
     topic: string;
-}
+};

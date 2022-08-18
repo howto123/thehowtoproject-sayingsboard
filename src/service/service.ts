@@ -1,21 +1,21 @@
 import { FormState } from '../components/Form';
-import { SayingModel } from '../data/dataModel'
+import { SayingModel } from '../data/dataModel';
 
 import * as BackendFunctions from '../backendApi/backendMethods';
 
-export function getAllSayings(){
+export function getAllSayings() {
     return BackendFunctions.getAllSayings();
 }
 
 type RequestBody = {
-    dbAction: 'create'|'read'|'update'|'delete'
-    content: SayingModel
-}
+    dbAction: 'create' | 'read' | 'update' | 'delete';
+    content: SayingModel;
+};
 
-export function handleFormSubmit(stateWhenSubmit: FormState, selectedId: string){
+export function handleFormSubmit(stateWhenSubmit: FormState, selectedId: string) {
     //first we need to build an object, that contains all necessairy information for our request
     let requestBody: RequestBody = { ...stateWhenSubmit } as RequestBody;
-    Object.assign(requestBody.content, { '_id': selectedId});
+    Object.assign(requestBody.content, { _id: selectedId });
 
     switch (requestBody.dbAction) {
         case 'create': {
@@ -31,7 +31,7 @@ export function handleFormSubmit(stateWhenSubmit: FormState, selectedId: string)
             break;
         }
         default:
-            console.log("default");
+            console.log('default');
             break;
     }
 }

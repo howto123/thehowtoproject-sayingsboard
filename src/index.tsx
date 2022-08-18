@@ -3,8 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.css';
 
-
-
 // Components
 import App from './components/App';
 
@@ -18,13 +16,12 @@ import './index.scss';
  * and finally (indirectly) imported here.
  */
 
-const root = ReactDOM.createRoot(document.getElementById('root') as Element|DocumentFragment);
+const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
 root.render(
-	<React.StrictMode>
-		<div className="container text-center">
-			<h2 className="m-5">Great sayings of this world</h2>
-			<App />
-		</div>
+    <React.StrictMode>
+        <div className="container text-center">
+            <h2 className="m-5">Great sayings of this world</h2>
+            <App />
+        </div>
     </React.StrictMode>
 );
-

@@ -4,27 +4,23 @@
         "saying": "saying1",
         "author": "author1",
         "topic": "topic1"
-
     },
     {
         "_id": "2",
         "saying": "saying2",
         "author": "author2",
         "topic": "topic2"
-
     },
     {
         "_id": "3",
         "saying": "saying3",
         "author": "author3",
         "topic": "topic3"
-
     },
     {
         "_id": "4",
         "saying": "saying4",
         "author": "author4",
         "topic": "topic4"
-
     }
 ]
