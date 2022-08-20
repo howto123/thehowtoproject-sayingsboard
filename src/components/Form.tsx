@@ -1,22 +1,18 @@
 import React from 'react';
-import $ from 'jquery';
 
-import { validateInputByDbAction } from '../utils/inputValidation';
-
-export type FormContent = {
-    saying: string;
-    author: string;
-    topic: string;
-};
-
-export type FormState = {
-    dbAction: 'create' | 'delete' | 'update';
-    content: FormContent;
-};
-
-type FormProps = {
-    handleFormSubmit: (stateWhenSubmit: FormState) => void;
-    selectedId: string;
+export type FormProps = {
+    dbAction: string;
+    setDbAction: (action: string) => void;
+    inputValueSaying: string;
+    setInputValueSaying: (value: string) => void;
+    inputValueAuthor: string;
+    setInputValueAuthor: (value: string) => void;
+    inputValueTopic: string;
+    setInputValueTopic: (value: string) => void;
+    inputErrorText: string;
+    handleFormSubmit: () => void;
+    setInputFieldsToTableRow: () => void;
+    setSelectedId: (id: string) => void;
 };
 
 /**
@@ -24,113 +20,72 @@ type FormProps = {
  * (the selectedId is not in the form but needed for the backend requests. It sits on the app
  * component and being updated via the table component)
  */
-class Form extends React.Component<FormProps, FormState> {
+class Form extends React.Component<FormProps, unknown> {
     constructor(props: FormProps) {
         super(props);
-        this.state = {
-            dbAction: 'create',
-            content: {
-                // _id is passed as prop from App.js
-                saying: '',
-                author: '',
-                topic: ''
-            }
-        };
+        // no state here, the state comes from the parent as props
     }
 
-    componentDidMount() {
-        // initializing the checked button after mount
-        (document.getElementById('create') as HTMLInputElement).checked = true;
-    }
-
-    handleFormSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-
-        // read values into variable
-        const input = new FormData(event.target as HTMLFormElement);
-        const stateWhenSubmit: FormState = {
-            dbAction: input.get('action') as 'create' | 'delete' | 'update',
-            content: {
-                saying: input.get('saying') as string,
-                author: input.get('author') as string,
-                topic: input.get('topic') as string
-            }
-        };
-
-        const isValid = validateInputByDbAction(stateWhenSubmit.dbAction, stateWhenSubmit.content);
-        if (!isValid) {
-            console.log('input not valid', isValid);
-        }
-        console.log('Here we are');
-        console.log('isValid: ', isValid, 'formState: ', stateWhenSubmit);
-
-        // update form state
-        this.setState(stateWhenSubmit);
-        //console.log("dev: don't forget to restet the form...A");
-
-        // call the submit handler of the parent
-        this.props.handleFormSubmit(stateWhenSubmit);
+    instruction = () => {
+        if (this.props.dbAction === 'create') return 'Please enter some text';
+        if (this.props.dbAction === 'update') return 'Please select a saying and modify it';
+        if (this.props.dbAction === 'delete') return 'Please select the saying to be deleted';
+        return 'Please choose your action';
     };
 
-    onDbActionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // read variable
-        const dbAction = event.target.value as 'create' | 'delete' | 'update';
+    checkDisabled = () => {
+        if (this.props.dbAction === 'delete') return true;
+        return false;
+    };
 
-        // get input objects
-        const inputCreate = $('#saying') as JQuery<HTMLInputElement>;
-        const inputUpdate = $('#author') as JQuery<HTMLInputElement>;
-        const inputDelete = $('#topic') as JQuery<HTMLInputElement>;
+    handleCheckCreate = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.setDbAction(event.target.value);
+        this.props.setInputValueSaying('');
+        this.props.setInputValueAuthor('');
+        this.props.setInputValueTopic('');
+        this.props.setSelectedId('');
+    };
 
-        // enable or disable input fields. this "state" is not reflected in a react state
-        this.setState({ dbAction: dbAction });
-        switch (dbAction) {
-            case 'create':
-                inputCreate.prop('disabled', false);
-                inputUpdate.prop('disabled', false);
-                inputDelete.prop('disabled', false);
-                break;
-            case 'update':
-                inputCreate.prop('disabled', false);
-                inputUpdate.prop('disabled', false);
-                inputDelete.prop('disabled', false);
-                break;
-            case 'delete':
-                inputCreate.prop('disabled', true);
-                inputUpdate.prop('disabled', true);
-                inputDelete.prop('disabled', true);
-                break;
-            default: {
-                /* error... */
-            }
-        }
+    handleCheckUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.setDbAction(event.target.value);
+        this.props.setInputFieldsToTableRow();
+    };
+
+    handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        this.props.handleFormSubmit();
     };
 
     render() {
         return (
-            <form name="form" className="container-fluid my-5" onSubmit={this.handleFormSubmit}>
+            <form
+                name="form"
+                className="container-fluid my-5"
+                onSubmit={(event) => this.handleSubmit(event)}>
                 <p className="text-start">Please choose what you want to do:</p>
                 <div className="d-flex flex-row align-middle">
                     <input
                         type="radio"
                         name="action"
-                        onChange={this.onDbActionChanged}
+                        onChange={(event) => this.handleCheckCreate(event)}
                         className="btn-check"
                         value="create"
                         id="create"
+                        checked={this.props.dbAction === 'create'}
                     />
                     <label
                         className="d-flex justify-content-center btn btn-outline-success col mx-2"
-                        htmlFor="create"
-                    >
+                        htmlFor="create">
                         <span className="align-self-center">Add a new saying</span>
                     </label>
                     <input
                         type="radio"
                         name="action"
-                        onChange={this.onDbActionChanged}
+                        onChange={(event) => this.handleCheckUpdate(event)}
                         className="btn-check"
                         value="update"
                         id="update"
+                        checked={this.props.dbAction === 'update'}
                     />
                     <label className="btn btn-outline-success col mx-2" htmlFor="update">
                         Modify highlighted saying
@@ -138,10 +93,11 @@ class Form extends React.Component<FormProps, FormState> {
                     <input
                         type="radio"
                         name="action"
-                        onChange={this.onDbActionChanged}
+                        onChange={(event) => this.props.setDbAction(event.target.value)}
                         className="btn-check"
                         value="delete"
                         id="delete"
+                        checked={this.props.dbAction === 'delete'}
                     />
                     <label className="btn btn-outline-success col mx-2" htmlFor="delete">
                         Delete highlighted saying
@@ -150,16 +106,16 @@ class Form extends React.Component<FormProps, FormState> {
                 <br />
                 <br />
                 <div>
-                    <p className="text-start">If necessairy, enter the required text:</p>
+                    <p className="text-start">{this.instruction()}</p>
                     <div className="row align-items-center justify-content-center">
                         <label htmlFor="saying" className="col-md-6">
-                            Saying:{' '}
+                            Saying:
                         </label>
                         <label htmlFor="author" className="col-3">
-                            Author:{' '}
+                            Author:
                         </label>
                         <label htmlFor="topic" className="col-3">
-                            Topic:{' '}
+                            Topic:
                         </label>
                     </div>
                     <div className="row align-items-center justify-content-center">
@@ -169,6 +125,9 @@ class Form extends React.Component<FormProps, FormState> {
                             type="text"
                             placeholder="Enter a saying to create or update"
                             className="col-md-6 text-center"
+                            value={this.props.inputValueSaying}
+                            disabled={this.checkDisabled()}
+                            onChange={(event) => this.props.setInputValueSaying(event.target.value)}
                         />
                         <input
                             id="author"
@@ -176,6 +135,9 @@ class Form extends React.Component<FormProps, FormState> {
                             type="text"
                             placeholder="And an author..."
                             className="col-3 text-center"
+                            value={this.props.inputValueAuthor}
+                            disabled={this.checkDisabled()}
+                            onChange={(event) => this.props.setInputValueAuthor(event.target.value)}
                         />
                         <input
                             id="topic"
@@ -183,7 +145,13 @@ class Form extends React.Component<FormProps, FormState> {
                             type="text"
                             placeholder="And a topic..."
                             className="col-3 text-center"
+                            value={this.props.inputValueTopic}
+                            disabled={this.checkDisabled()}
+                            onChange={(event) => this.props.setInputValueTopic(event.target.value)}
                         />
+                    </div>
+                    <div className="text-start text-danger">
+                        <div>{this.props.inputErrorText}</div>
                     </div>
                 </div>
                 <br />

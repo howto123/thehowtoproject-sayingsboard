@@ -10,7 +10,7 @@ import { SayingModel } from '../data/dataModel';
 
 //for now, data represents the database
 
-let data: SayingModel[] = myData;
+const data: SayingModel[] = myData;
 
 export function getAllSayings() {
     return data;
@@ -21,8 +21,10 @@ export function getAllSayings() {
  * @param sayingObject
  */
 export function createSaying(sayingObject: SayingModel) {
-    const id = String(uuidv4()).slice(0, 4);
-    console.log(id);
+    let id = '';
+    do {
+        id = String(uuidv4()).slice(0, 4);
+    } while (data.some((row) => row._id === id));
     sayingObject._id = id;
     data.push(sayingObject);
 }
@@ -48,6 +50,5 @@ export function deleteSaying(sayingObject: SayingModel) {
     if (index > -1) {
         return data.splice(index, 1);
     }
-    console.log('element does not seem to exist');
     return undefined;
 }

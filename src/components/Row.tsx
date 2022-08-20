@@ -6,21 +6,28 @@ type RowProps = {
     saying: string;
     author: string;
     topic: string;
-    updateSelectedId: (id: string) => void;
-    highlightNewRow: (id: string) => void;
+    selectedId: string;
+    setSelectedId: (id: string) => void;
 };
 
 export function Row(props: RowProps) {
     function updateSelectedId(event: React.MouseEvent) {
-        props.highlightNewRow(props._id);
-        props.updateSelectedId(props._id);
+        props.setSelectedId(props._id);
+    }
+
+    const staticStyles =
+        'row align-items-center justify-content-center row-in-table selectable-row border-0 ';
+
+    function reaciveStyles() {
+        return staticStyles.concat(props._id === props.selectedId ? 'bg-secondary' : '');
     }
 
     return (
         <div
             id={props._id}
-            className="row align-items-center justify-content-center row-in-table selectable-row border-0"
-            onClick={(event: React.MouseEvent) => updateSelectedId(event)}>
+            className={reaciveStyles()}
+            onClick={(event: React.MouseEvent) => props.setSelectedId(props._id)}
+        >
             <div className="col-sm-12 col-md-6">
                 <div className="d-md-none table-label-small border-0 p-0">Saying: </div>
                 {props.saying}
