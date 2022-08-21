@@ -105,7 +105,6 @@ class Form extends React.Component<FormProps, unknown> {
                     </label>
                 </div>
                 <br />
-                <br />
                 <div>
                     <p className="text-start">{this.instruction()}</p>
                     <div className="row align-items-center justify-content-center">
@@ -120,60 +119,68 @@ class Form extends React.Component<FormProps, unknown> {
                         </label>
                     </div>
                     <div className="row align-items-center justify-content-center">
-                        <div className="col-md-6 p-3 border-1">
-                            <label htmlFor="saying" className="d-block d-md-none input-label-small">
-                                Saying:
-                            </label>
-                            <input
-                                id="saying"
-                                name="saying"
-                                type="text"
-                                placeholder="Enter a saying to create or update"
-                                className="col-12 border-0 text-center p-0"
-                                value={this.props.inputValueSaying}
-                                disabled={this.checkDisabled()}
-                                onChange={(event) =>
-                                    this.props.setInputValueSaying(event.target.value)
-                                }
-                            />
+                        <div className="col-md-6 border-0 p-0">
+                            <div className="mx-2 my-0 p-3 border-1">
+                                <label
+                                    htmlFor="saying"
+                                    className="d-block d-md-none input-label-small">
+                                    Saying:
+                                </label>
+                                <input
+                                    id="saying"
+                                    name="saying"
+                                    type="text"
+                                    placeholder="Enter a saying to create or update"
+                                    className="col-12 border-0 text-center p-0"
+                                    value={this.props.inputValueSaying}
+                                    disabled={this.checkDisabled()}
+                                    onChange={(event) =>
+                                        this.props.setInputValueSaying(event.target.value)
+                                    }
+                                />
+                            </div>
                         </div>
-                        <div className="col-md-3 p-3 border-1">
-                            <label
-                                htmlFor="author"
-                                className="d-block d-md-none p-1 input-label-small">
-                                Author:
-                            </label>
-                            <input
-                                id="author"
-                                name="author"
-                                type="text"
-                                placeholder="And an author..."
-                                className="col-12 border-0 text-center p-0"
-                                value={this.props.inputValueAuthor}
-                                disabled={this.checkDisabled()}
-                                onChange={(event) =>
-                                    this.props.setInputValueAuthor(event.target.value)
-                                }
-                            />
+                        <div className="col-md-3 border-0 p-0">
+                            <div className="mx-2 my-0 p-3 border-1">
+                                <label
+                                    htmlFor="author"
+                                    className="d-block d-md-none p-1 input-label-small">
+                                    Author:
+                                </label>
+                                <input
+                                    id="author"
+                                    name="author"
+                                    type="text"
+                                    placeholder="And an author..."
+                                    className="col-12 border-0 text-center p-0"
+                                    value={this.props.inputValueAuthor}
+                                    disabled={this.checkDisabled()}
+                                    onChange={(event) =>
+                                        this.props.setInputValueAuthor(event.target.value)
+                                    }
+                                />
+                            </div>
                         </div>
-                        <div className="col-md-3 p-3 border-1">
-                            <label
-                                htmlFor="topic"
-                                className="d-block d-md-none p-1 input-label-small">
-                                Topic:
-                            </label>
-                            <input
-                                id="topic"
-                                name="topic"
-                                type="text"
-                                placeholder="And a topic..."
-                                className="col-12 border-0 text-center p-0"
-                                value={this.props.inputValueTopic}
-                                disabled={this.checkDisabled()}
-                                onChange={(event) =>
-                                    this.props.setInputValueTopic(event.target.value)
-                                }
-                            />
+                        <div className="col-md-3 border-0 p-0">
+                            <div className="mx-2 my-0 p-3 border-1">
+                                <label
+                                    htmlFor="topic"
+                                    className="d-block d-md-none p-1 input-label-small">
+                                    Topic:
+                                </label>
+                                <input
+                                    id="topic"
+                                    name="topic"
+                                    type="text"
+                                    placeholder="And a topic..."
+                                    className="col-12 border-0 text-center p-0"
+                                    value={this.props.inputValueTopic}
+                                    disabled={this.checkDisabled()}
+                                    onChange={(event) =>
+                                        this.props.setInputValueTopic(event.target.value)
+                                    }
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="text-start text-danger">
@@ -181,12 +188,10 @@ class Form extends React.Component<FormProps, unknown> {
                     </div>
                 </div>
                 <br />
-                <br />
                 <p className="text-start">When you are done, click this button:</p>
                 <div className="row">
                     <input type="submit" value="Add/Modify/Delete" className="" />
                 </div>
-                <br />
                 <br />
             </form>
         );

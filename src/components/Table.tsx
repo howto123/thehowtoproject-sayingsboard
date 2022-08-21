@@ -24,12 +24,15 @@ function Table(props: TableProps) {
                 </div>
                 <div>
                     {props.arrayOfRowObjects.map((rowObject) => (
-                        <Row
-                            key={rowObject._id}
-                            {...rowObject}
-                            selectedId={props.selectedId}
-                            setSelectedId={props.setSelectedId}
-                        />
+                        <>
+                            <Row
+                                key={rowObject._id}
+                                {...rowObject}
+                                selectedId={props.selectedId}
+                                setSelectedId={props.setSelectedId}
+                            />
+                            <div className="d-md-none bg-white p-2 border-start-0 border-end-0"></div>
+                        </>
                     ))}
                 </div>
             </div>
