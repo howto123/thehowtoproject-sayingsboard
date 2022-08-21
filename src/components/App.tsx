@@ -37,10 +37,13 @@ class App extends React.Component<unknown, AppState> {
 
     // setters for the entire state
     setSelectedId = (id: string) => {
-        this.setState({ selectedId: id }, () => {
-            //callback, after state is set: update inputfields if necessairy
-            if (this.state.dbAction === 'update') this.setInputFieldsToTableRow();
-        });
+        // only update when dbAction is 'update' or 'delete'
+        if (this.state.dbAction !== 'create') {
+            this.setState({ selectedId: id }, () => {
+                //callback, after state is set: update inputfields if necessairy
+                if (this.state.dbAction === 'update') this.setInputFieldsToTableRow();
+            });
+        }
     };
 
     setDbAction = (action: string) => {

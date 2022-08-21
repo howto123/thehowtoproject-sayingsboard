@@ -11,10 +11,6 @@ type RowProps = {
 };
 
 export function Row(props: RowProps) {
-    function updateSelectedId(event: React.MouseEvent) {
-        props.setSelectedId(props._id);
-    }
-
     const staticStyles =
         'row align-items-center justify-content-center row-in-table selectable-row border-0 ';
 
@@ -26,8 +22,7 @@ export function Row(props: RowProps) {
         <div
             id={props._id}
             className={reaciveStyles()}
-            onClick={(event: React.MouseEvent) => props.setSelectedId(props._id)}
-        >
+            onClick={() => props.setSelectedId(props._id)}>
             <div className="col-sm-12 col-md-6">
                 <div className="d-md-none table-label-small border-0 p-0">Saying: </div>
                 {props.saying}
@@ -40,7 +35,7 @@ export function Row(props: RowProps) {
                 <div className="d-md-none table-label-small border-0 p-0">Topic: </div>
                 {props.topic}
             </div>
-            <div className="d-md-none bg-dark p-0">Author: </div>
+            <div className="d-md-none bg-white p-2 border-start-0 border-end-0"></div>
         </div>
     );
 }
