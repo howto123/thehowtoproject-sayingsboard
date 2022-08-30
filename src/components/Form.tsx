@@ -106,7 +106,6 @@ class Form extends React.Component<FormProps, unknown> {
                         Delete highlighted saying
                     </label>
                 </div>
-                <br />
                 <div>
                     <p className="text-start">{this.instruction()}</p>
                     <div className="row align-items-center justify-content-center">
@@ -192,7 +191,6 @@ class Form extends React.Component<FormProps, unknown> {
                         <div>{this.props.inputErrorText}</div>
                     </div>
                 </div>
-                <br />
                 <p className="text-start">When you are done, click this button:</p>
                 <div className="row">
                     <input type="submit" value="Add/Modify/Delete" className="" />
