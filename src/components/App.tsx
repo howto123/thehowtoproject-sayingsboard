@@ -150,6 +150,19 @@ class App extends React.Component<unknown, AppState> {
                     setSelectedId={this.setSelectedId}
                 />
                 <Form {...this.getFormProps()} />
+                <div className="text-start">
+                    <p>
+                        frontend:{' '}
+                        <a href="https://github.com/howto123/thehowtoproject-sayingsboard/">
+                            https://github.com/howto123/thehowtoproject-sayingsboard/
+                        </a>{' '}
+                        <br />
+                        backend:{' '}
+                        <a href="https://github.com/howto123/thehowtoproject-sayings-backend">
+                            https://github.com/howto123/thehowtoproject-sayings-backend
+                        </a>
+                    </p>
+                </div>
             </div>
         );
     }
