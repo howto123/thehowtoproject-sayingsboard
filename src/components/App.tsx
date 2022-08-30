@@ -24,7 +24,7 @@ class App extends React.Component<unknown, AppState> {
         // All components in this app are tightly connected to each other. Therefore,
         // the entire state live here and and are given to or modified by App's children.
         this.state = {
-            arrayOfSayingObjects: Service.getAllSayings(),
+            arrayOfSayingObjects: [],
             selectedId: '',
             dbAction: 'create',
             inputValueSaying: '',
@@ -33,6 +33,9 @@ class App extends React.Component<unknown, AppState> {
             inputErrorText: '',
             isFormValid: false
         } as AppState;
+
+        // call async methods to
+        (async () => this.setState({ arrayOfSayingObjects: await Service.getAllSayings() }))();
     }
 
     // setters for the entire state
@@ -84,7 +87,7 @@ class App extends React.Component<unknown, AppState> {
             this.setInputValueTopic('');
         }
         // call service
-        this.setState({ arrayOfSayingObjects: Service.getAllSayings() });
+        (async () => this.setState({ arrayOfSayingObjects: await Service.getAllSayings() }))();
     };
 
     getValidationArgs = () => {

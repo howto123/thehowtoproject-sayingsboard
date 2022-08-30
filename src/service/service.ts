@@ -1,8 +1,8 @@
 import { SayingModel } from '../data/dataModel';
 import * as BackendFunctions from '../backendApi/backendMethods';
 
-export function getAllSayings() {
-    return BackendFunctions.getAllSayings();
+export async function getAllSayings() {
+    return await BackendFunctions.getAllSayings();
 }
 
 type RequestBody = {
