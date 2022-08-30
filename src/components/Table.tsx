@@ -31,7 +31,6 @@ function Table(props: TableProps) {
                                 selectedId={props.selectedId}
                                 setSelectedId={props.setSelectedId}
                             />
-                            <div className="d-md-none bg-white p-2 border-start-0 border-end-0"></div>
                         </>
                     ))}
                 </div>

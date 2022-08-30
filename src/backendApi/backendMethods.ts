@@ -1,43 +1,64 @@
-import { v4 as uuidv4 } from 'uuid';
-
-// myData reflects, what the backside will later give back
-import myData from '../data/sayingObject.json';
 import { SayingModel } from '../data/dataModel';
 
 /**
  * This file contains all functions that make REST requests to the backend.
  */
 
-//for now, data represents the database
+// endpoint adresses:
+const url = 'https://thehowtoproject-sayingsbackend.herokuapp.com';
+//const url = 'localhost:3001';
+const urlGetAll = url.concat('/read');
+const urlCreate = url.concat('/create');
+const urlUpdate = url.concat('/update');
+const urlDelete = url.concat('/delete');
 
-const data: SayingModel[] = myData;
-
-export function getAllSayings() {
-    return data;
+export async function getAllSayings() {
+    return await (
+        await fetch(urlGetAll, {
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    ).json();
 }
 
 /**
  * Makes request to make a new saying in db.
  * @param sayingObject
  */
-export function createSaying(sayingObject: SayingModel) {
-    let id = '';
-    do {
-        id = String(uuidv4()).slice(0, 4);
-    } while (data.some((row) => row._id === id));
-    sayingObject._id = id;
-    data.push(sayingObject);
+export async function createSaying(sayingObject: SayingModel) {
+    return await (
+        await fetch(urlCreate, {
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(sayingObject)
+        })
+    ).json();
 }
 
 /**
  * Makes request to modify an existing saying in db.
  * @params sayingObject: { _id: string, saying: string, author: string, topic: string }
  */
-export function updateSaying(sayingObject: SayingModel) {
-    Object.assign(
-        data.find((element) => element._id === sayingObject._id) as SayingModel,
-        sayingObject
-    );
+export async function updateSaying(sayingObject: SayingModel) {
+    return await (
+        await fetch(urlUpdate, {
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(sayingObject)
+        })
+    ).json();
 }
 
 /**
@@ -45,10 +66,17 @@ export function updateSaying(sayingObject: SayingModel) {
  * @params sayingObject: { _id: string, saying: string, author: string, topic: string }
  * @returns the deleted sayingObject if it exists or undefined
  */
-export function deleteSaying(sayingObject: SayingModel) {
-    const index = data.findIndex((element) => element._id === sayingObject._id);
-    if (index > -1) {
-        return data.splice(index, 1);
-    }
-    return undefined;
+export async function deleteSaying(sayingObject: SayingModel) {
+    return await (
+        await fetch(urlDelete, {
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(sayingObject)
+        })
+    ).json();
 }
