@@ -62,7 +62,8 @@ class Form extends React.Component<FormProps, unknown> {
             <form
                 name="form"
                 className="container-fluid my-5"
-                onSubmit={(event) => this.handleSubmit(event)}>
+                onSubmit={(event) => this.handleSubmit(event)}
+            >
                 <p className="text-start">Please choose what you want to do:</p>
                 <div className="d-flex flex-row align-middle">
                     <input
@@ -76,7 +77,8 @@ class Form extends React.Component<FormProps, unknown> {
                     />
                     <label
                         className="d-flex justify-content-center btn btn-outline-success col mx-2"
-                        htmlFor="create">
+                        htmlFor="create"
+                    >
                         <span className="align-self-center">Add a new saying</span>
                     </label>
                     <input
@@ -123,7 +125,8 @@ class Form extends React.Component<FormProps, unknown> {
                             <div className="mx-2 my-0 p-3 border-1">
                                 <label
                                     htmlFor="saying"
-                                    className="d-block d-md-none input-label-small">
+                                    className="d-block d-md-none input-label-small"
+                                >
                                     Saying:
                                 </label>
                                 <input
@@ -144,7 +147,8 @@ class Form extends React.Component<FormProps, unknown> {
                             <div className="mx-2 my-0 p-3 border-1">
                                 <label
                                     htmlFor="author"
-                                    className="d-block d-md-none p-1 input-label-small">
+                                    className="d-block d-md-none p-1 input-label-small"
+                                >
                                     Author:
                                 </label>
                                 <input
@@ -165,7 +169,8 @@ class Form extends React.Component<FormProps, unknown> {
                             <div className="mx-2 my-0 p-3 border-1">
                                 <label
                                     htmlFor="topic"
-                                    className="d-block d-md-none p-1 input-label-small">
+                                    className="d-block d-md-none p-1 input-label-small"
+                                >
                                     Topic:
                                 </label>
                                 <input

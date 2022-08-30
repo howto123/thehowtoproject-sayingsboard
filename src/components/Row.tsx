@@ -22,7 +22,8 @@ export function Row(props: RowProps) {
         <div
             id={props._id}
             className={reaciveStyles()}
-            onClick={() => props.setSelectedId(props._id)}>
+            onClick={() => props.setSelectedId(props._id)}
+        >
             <div className="col-sm-12 col-md-6 d-flex">
                 <div className="d-md-none table-label-small border-0 p-0">Saying: </div>
                 <span className="align-self-center col text-center">{props.saying}</span>
