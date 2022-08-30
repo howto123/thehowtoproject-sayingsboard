@@ -18,7 +18,7 @@ type SubmitArgs = {
     inputValueTopic: string;
 };
 
-export function handleFormSubmit(args: SubmitArgs) {
+export async function handleFormSubmit(args: SubmitArgs) {
     //first we need to build an object, that contains all necessairy information for our request
     const requestBody: RequestBody = {
         dbAction: args.dbAction as 'create' | 'read' | 'update' | 'delete',
@@ -32,15 +32,15 @@ export function handleFormSubmit(args: SubmitArgs) {
 
     switch (requestBody.dbAction) {
         case 'create': {
-            BackendFunctions.createSaying(requestBody.content);
+            await BackendFunctions.createSaying(requestBody.content);
             break;
         }
         case 'update': {
-            BackendFunctions.updateSaying(requestBody.content);
+            await BackendFunctions.updateSaying(requestBody.content);
             break;
         }
         case 'delete': {
-            BackendFunctions.deleteSaying(requestBody.content);
+            await BackendFunctions.deleteSaying(requestBody.content);
             break;
         }
         default:

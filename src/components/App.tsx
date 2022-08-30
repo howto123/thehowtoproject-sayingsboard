@@ -79,15 +79,17 @@ class App extends React.Component<unknown, AppState> {
      * This handler calls service method if user input is valid.
      */
     handleFormSubmit = () => {
-        // check state
-        if (validateForm(this.getValidationArgs())) {
-            Service.handleFormSubmit(this.getServiceArgs());
-            this.setInputValueSaying('');
-            this.setInputValueAuthor('');
-            this.setInputValueTopic('');
-        }
-        // call service
-        (async () => this.setState({ arrayOfSayingObjects: await Service.getAllSayings() }))();
+        (async () => {
+            // check state
+            if (validateForm(this.getValidationArgs())) {
+                await Service.handleFormSubmit(this.getServiceArgs());
+                this.setInputValueSaying('');
+                this.setInputValueAuthor('');
+                this.setInputValueTopic('');
+            }
+            // call service
+            this.setState({ arrayOfSayingObjects: await Service.getAllSayings() });
+        })();
     };
 
     getValidationArgs = () => {
