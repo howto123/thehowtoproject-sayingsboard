@@ -15,6 +15,7 @@ type AppState = {
     inputValueTopic: string;
     inputErrorText: string;
     isFormValid: boolean;
+    loading: boolean;
 };
 
 class App extends React.Component<unknown, AppState> {
@@ -31,11 +32,15 @@ class App extends React.Component<unknown, AppState> {
             inputValueAuthor: '',
             inputValueTopic: '',
             inputErrorText: '',
-            isFormValid: false
+            isFormValid: false,
+            loading: true
         } as AppState;
 
-        // call async methods to
-        (async () => this.setState({ arrayOfSayingObjects: await Service.getAllSayings() }))();
+        // call async method
+        (async () => {
+            this.setState({ arrayOfSayingObjects: await Service.getAllSayings() });
+            this.setState({ loading: false });
+        })();
     }
 
     // setters for the entire state
@@ -141,10 +146,11 @@ class App extends React.Component<unknown, AppState> {
         };
     };
 
-    render() {
+    ToBeRendered = () => {
         return (
             <div className="m-5">
                 <Table
+                    loading={this.state.loading}
                     arrayOfRowObjects={this.state.arrayOfSayingObjects}
                     selectedId={this.state.selectedId}
                     setSelectedId={this.setSelectedId}
@@ -165,6 +171,10 @@ class App extends React.Component<unknown, AppState> {
                 </div>
             </div>
         );
+    };
+
+    render() {
+        return <this.ToBeRendered />;
     }
 }
 

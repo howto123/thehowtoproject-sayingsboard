@@ -2,6 +2,7 @@ import { Row } from './Row';
 import { SayingModel } from '../data/dataModel';
 
 type TableProps = {
+    loading: boolean;
     arrayOfRowObjects: SayingModel[];
     selectedId: string;
     setSelectedId: (id: string) => void;
@@ -12,6 +13,13 @@ type TableProps = {
  *
  */
 function Table(props: TableProps) {
+    const Loading = () => {
+        if (props.loading) {
+            return <div>Loading...</div>;
+        } else {
+            return <></>;
+        }
+    };
     return (
         <div className="container-fluid my-5">
             <div className="border border-1 border-dark mytable">
@@ -23,6 +31,7 @@ function Table(props: TableProps) {
                     </div>
                 </div>
                 <div>
+                    <Loading />
                     {props.arrayOfRowObjects.map((rowObject) => (
                         <>
                             <Row
