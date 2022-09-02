@@ -2,6 +2,8 @@
 
 Simple app to check out react. Allows user to post great/funny/random sayings and performing crud operations on them.
 
+The site will be continuously published on: https://thehowtoproject-sayings.netlify.app/
+
 This project uses typescript, a helpful reference was: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example
 
 ---
