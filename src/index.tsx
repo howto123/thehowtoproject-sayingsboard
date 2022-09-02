@@ -19,7 +19,7 @@ import './index.scss';
 const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
 root.render(
     <React.StrictMode>
-        <div className="container text-center" style={{ backgroundColor: 'lightblue' }}>
+        <div className="container text-center">
             <h2 className="m-5">Great sayings of this world</h2>
             <App />
         </div>
