@@ -149,7 +149,6 @@ class App extends React.Component<unknown, AppState> {
     // functionality
     setInputFieldsToTableRow = () => {
         const row = this.state.arrayOfSayingObjects.find((e) => e._id === this.state.selectedId);
-        console.log('setInputFieldsToRow called', row);
         if (row) {
             this.setInputValueSaying(row.saying);
             this.setInputValueAuthor(row.author);
