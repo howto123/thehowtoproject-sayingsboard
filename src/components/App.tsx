@@ -35,7 +35,9 @@ class App extends React.Component<unknown, AppState> {
             isFormValid: false,
             loading: true
         } as AppState;
+    }
 
+    componentDidMount() {
         // call async method
         (async () => {
             this.setState({ arrayOfSayingObjects: await Service.getAllSayings() });
@@ -83,6 +85,7 @@ class App extends React.Component<unknown, AppState> {
     /**
      * This handler calls service method if user input is valid.
      */
+
     handleFormSubmit = () => {
         (async () => {
             // check state
@@ -97,6 +100,31 @@ class App extends React.Component<unknown, AppState> {
         })();
     };
 
+    // handler for changes in table row (-> editable)
+    changeHandler = (field: string, newValue: string, id: string) => {
+        this.setState({ selectedId: id }, () => {
+            this.setInputFieldsToTableRow();
+            this.setState({ dbAction: 'update' });
+        });
+        const row = this.state.arrayOfSayingObjects.find((e) => e._id === id);
+        if (!row) throw new Error('No valid id parameter in changeHandler');
+        switch (field) {
+            case 'saying':
+                row.saying = newValue;
+                break;
+            case 'author':
+                row.author = newValue;
+                break;
+            case 'topic':
+                row.topic = newValue;
+                break;
+            default:
+                throw new Error('No valid field parameter in changeHandler');
+                break;
+        }
+    };
+
+    //helpers
     getValidationArgs = () => {
         return {
             dbAction: this.state.dbAction,
@@ -154,6 +182,7 @@ class App extends React.Component<unknown, AppState> {
                     arrayOfRowObjects={this.state.arrayOfSayingObjects}
                     selectedId={this.state.selectedId}
                     setSelectedId={this.setSelectedId}
+                    changeHandler={this.changeHandler}
                 />
                 <Form {...this.getFormProps()} />
                 <div className="text-start">

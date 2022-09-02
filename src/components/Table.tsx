@@ -6,6 +6,7 @@ type TableProps = {
     arrayOfRowObjects: SayingModel[];
     selectedId: string;
     setSelectedId: (id: string) => void;
+    changeHandler: (field: string, newValue: string, id: string) => void;
 };
 
 /**
@@ -33,14 +34,13 @@ function Table(props: TableProps) {
                 <div>
                     <Loading />
                     {props.arrayOfRowObjects.map((rowObject) => (
-                        <>
-                            <Row
-                                key={rowObject._id}
-                                {...rowObject}
-                                selectedId={props.selectedId}
-                                setSelectedId={props.setSelectedId}
-                            />
-                        </>
+                        <Row
+                            key={rowObject._id}
+                            {...rowObject}
+                            selectedId={props.selectedId}
+                            setSelectedId={props.setSelectedId}
+                            changeHandler={props.changeHandler}
+                        />
                     ))}
                 </div>
             </div>
